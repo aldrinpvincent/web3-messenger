@@ -1,4 +1,4 @@
-export function getEthereumWallet() {
+export async function getEthereumWalletAccount() {
     try {
         const { ethereum } = window;
 
@@ -11,12 +11,12 @@ export function getEthereumWallet() {
 
         if (accounts.length !== 0) {
             const account = accounts[0];
-            setCurrentAccount(account);
             return [true, account];
         } else {
             return [false, "No authorized account found"];
         }
     } catch (error) {
         console.log(error);
+        return [fasle, error]
     }
 }

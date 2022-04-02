@@ -1,62 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import compiledContract from "./solidity/Messenger.json";
+import { getEthereumWalletAccount } from "./utils/getEthereumWallet";
 import "./App.css";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
-  const [count, setCount] = useState(0);
   const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [mining, setMining] = useState(false);
   const [data, setData] = useState([]);
 
-
   const contractAddress = "0x5AD263E9805E1c160c50374f9ed2d5E8ce001DC9";
-
   const contractABI = compiledContract.abi;
 
-  const checkIfWalletIsConnected = async () => {
-    try {
-      const { ethereum } = window;
-
-      if (!ethereum) {
-        console.log("Make sure you have metamask!");
-        return;
-      } else {
-        console.log("We have the ethereum object", ethereum);
+  useEffect(() => {
+    async function init() {
+      setLoading(true);
+      const [status, address] = await getEthereumWalletAccount();
+      console.log('status, address :>> ', status, address);
+      if (status) {
+        setCurrentAccount(address);
       }
-
-      const accounts = await ethereum.request({ method: "eth_accounts" });
-
-      if (accounts.length !== 0) {
-        const account = accounts[0];
-        console.log("Found an authorized account:", account);
-        setCurrentAccount(account);
-      } else {
-        console.log("No authorized account found")
-      }
-    } catch (error) {
-      console.log(error);
+      setLoading(false);
     }
-  }
 
-  /**
-  * Implement your connectWallet method here
-  */
+    init();
+
+  }, []);
+
+
   const connectWallet = async () => {
     try {
       const { ethereum } = window;
 
       if (!ethereum) {
-        alert("Get MetaMask!");
+        alert("MetaMask not installed!");
         return;
       }
 
       const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 
-      console.log("Connected", accounts[0]);
+      console.log("Connected to account: ", accounts[0]);
       setCurrentAccount(accounts[0]);
     } catch (error) {
       console.log(error)
@@ -91,7 +77,7 @@ const App = () => {
 
         console.log("Retrieved all messages...", messages);
         setData(messagesCleaned);
-        setCount(count.toNumber());
+        // setCount(count.toNumber());
 
       } else {
         console.log("Ethereum object doesn't exist!");
@@ -119,9 +105,6 @@ const App = () => {
 
         await messenger.wait();
         console.log("Mined -- ", messenger.hash);
-
-
-        // await fetchData();
         setMessage("")
 
       } else {
@@ -135,22 +118,17 @@ const App = () => {
     }
   }
 
-  useEffect(() => {
-    checkIfWalletIsConnected();
-    fetchData();
-  }, [])
-
 
   /**
  * Listen in for emitter events!
  */
-
 
   useEffect(() => {
     let messengerContract;
 
     const newMessage = (from, timestamp, message) => {
       console.log("NewMessage", from, timestamp, message);
+      setLoading(true);
       setData(prevState => [
         ...prevState,
         {
@@ -159,6 +137,7 @@ const App = () => {
           message: message,
         },
       ]);
+      setLoading(false);
     };
 
     if (window.ethereum) {
@@ -178,49 +157,50 @@ const App = () => {
 
 
   return (
-    <div className="mainContainer">
-      <div className="dataContainer">
-        <div className="header">
-          👋 Web 3 project
-        </div>
+    <div className="container">
+      <h1>
+        👋 Web3 Messenger
+      </h1>
+      <div className="messenger-form">
+        {currentAccount ? (
+          <>
+            <textarea value={message} rows="4" cols="50"
+              type="text" placeholder="Enter your message" onChange={(e) => setMessage(e.target.value)}
+            />
+            <button className="p-btn" onClick={() => sendData(message)}>
+              {mining ? "Loading..." : "Send message"}
+            </button>
+            <button className="p-btn" onClick={fetchData}> {loading ? "Fetching..." : "Fetch all messages"}
+            </button>
+          </>
 
-        <textarea value={message}
-          type="text" placeholder="Enter your message" onChange={(e) => setMessage(e.target.value)}
-        />
-        <button className="waveButton" onClick={() => sendData(message)}>
-          Store message
-        </button>
-
-
-        <button className="waveButton" onClick={fetchData}> {mining ? "Mining..." : "Retrieve all messages"}
-        </button>
-
-        <br />
-        Current number of records - {loading ? "Loading..." : count}
-        <br />
-
-        <br />
-
-        {data.map((message, index) => {
-          return (
-            <div key={index}>
-              <div>Address: <b>{message.address}</b></div>
-              <div>Time: <b>{message.timestamp.toString()}</b></div>
-              <div>Message: <b>{message.message}</b></div>
-              <br />
-            </div>)
-        })}
-
-
-        {/*
-        * If there is no currentAccount render this button
-        */}
-        {!currentAccount && (
-          <button className="waveButton" onClick={connectWallet}>
+        ) : (
+          <button className="p-btn" onClick={connectWallet}>
             Connect Wallet
           </button>
         )}
       </div>
+
+      {loading && <p className="info">Fetching all messages...</p>}
+
+
+      {data.length > 0 &&
+        <>
+          <br />
+          <span className="info">Current number of messages: </span>  <b>{data.length}</b>
+          <br />
+          <br />
+          <div className="messages">
+            {data.map((message, index) => {
+              return (
+                <div key={index} className="message">
+                  <div className="from">{message.address} </div>
+                  <div className="text"> {message.message}</div>
+                  <div className="time">{new Date(message.timestamp).toLocaleString()}</div>
+                </div>)
+            })}
+          </div>
+        </>}
     </div>
   );
 }
