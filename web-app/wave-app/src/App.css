@@ -21,37 +21,32 @@
   margin: 10px;
 }
 
-.messages{
-display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+.messages {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
-
-
-.message{
-
+.message {
   background-color: #579ffb;
   color: #fff;
   margin: 16px;
   padding: 16px;
   border-radius: 15px;
-
 }
 
-.message .from{
+.message .from {
   font-weight: bold;
   font-size: 14px;
 }
 
-.message .time{
+.message .time {
   font-size: 12px;
   color: black;
   padding-top: 8px;
 }
 
-
-.message .text{
+.message .text {
   font-size: 16px;
   padding-top: 8px;
 }
