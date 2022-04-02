@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import abi from "../../../artifacts/contracts/Messenger.sol/Messenger.json";
 import "./App.css";
-import { Test } from "./temp/test";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
