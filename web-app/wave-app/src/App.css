@@ -9,6 +9,23 @@
   color: #666f78;
 }
 
+.sub-head{
+  font-size: 14px;
+}
+
+.m-t-16{
+ margin-top: 16px;
+}
+
+.header{
+  display: flex;
+  align-items: center;
+}
+.main-head{
+  display: inline-block;
+  width: 400px;
+}
+
 .p-btn {
   cursor: pointer;
   border: 1px solid #00f;

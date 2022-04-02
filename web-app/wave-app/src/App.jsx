@@ -22,6 +22,7 @@ const App = () => {
       console.log('status, address :>> ', status, address);
       if (status) {
         setCurrentAccount(address);
+        fetchData();
       }
       setLoading(false);
     }
@@ -158,9 +159,17 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1>
-        👋 Web3 Messenger
-      </h1>
+      <header className="header">
+        <h1 className="main-head">
+          👋 Web3 Messenger
+        </h1>
+        <b className="sub-head info"> Send messages to me and stand a chance to win free ethereum tokens. Winners will be picked up randomly.
+          <br />
+          If you are a winner you will get 0.0001 ether instantly on sending a message.
+          <br />
+        </b>
+
+      </header>
       <div className="messenger-form">
         {currentAccount ? (
           <>
@@ -183,6 +192,7 @@ const App = () => {
 
       {loading && <p className="info">Fetching all messages...</p>}
 
+      <div className="info m-t-16"> All messages from all users will be updated here in real time here using <a href="https://docs.soliditylang.org/en/v0.4.21/contracts.html#events">solidity events.</a> </div>
 
       {data.length > 0 &&
         <>
