@@ -192,7 +192,7 @@ const App = () => {
 
       {loading && <p className="info">Fetching all messages...</p>}
 
-      <div className="info m-t-16"> All messages from all users will be updated here in real time here using <a href="https://docs.soliditylang.org/en/v0.4.21/contracts.html#events">solidity events.</a> </div>
+      <div className="info m-t-16"> All messages from all users will be updated here in real time using <a href="https://docs.soliditylang.org/en/v0.4.21/contracts.html#events">solidity events.</a> </div>
 
       {data.length > 0 &&
         <>
