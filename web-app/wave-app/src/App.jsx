@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import abi from "../../../artifacts/contracts/Messenger.sol/Messenger.json";
+import compiledContract from "./solidity/Messenger.json";
 import "./App.css";
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
 
   const contractAddress = "0x5AD263E9805E1c160c50374f9ed2d5E8ce001DC9";
 
-  const contractABI = abi.abi;
+  const contractABI = compiledContract.abi;
 
   const checkIfWalletIsConnected = async () => {
     try {
