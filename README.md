@@ -1,4 +1,7 @@
 # Web3 Messenger
+
+https://web3-messenger-dapp.vercel.app/
+
 ###  Send messages and win ethereum
 
 Web3 Messenger is a simple web3 app build using ReactJS and solidity. In this app you can send messages to me and stand a chance to win free ethereum tokens. 
@@ -13,6 +16,6 @@ All messages from all users will be updated in web app in real time using <a hre
 - ReactJS for frontend web app - https://reactjs.org/
 - Vite for frontend build and development - https://vitejs.dev/
 - Solidity for smart contracts - https://soliditylang.org/
-- Hardhat for blockchain development enviornment - https://hardhat.org/
+- Hardhat for blockchain development environment - https://hardhat.org/
 - Metamask for as crypto wallet - https://metamask.io/
 - Ethers package for ethereum related utilities -  https://www.npmjs.com/package/ethers
