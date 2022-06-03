@@ -9,7 +9,7 @@ Winners will be picked up randomly. If you are a winner you will get 0.0001 ethe
 
 The project's smart contract is deployed in Rinkeby (ETH Testnet) Blockchain using Alchemy[https://www.alchemy.com/] and web app deployed in vercel[https://vercel.com]
 
-All messages from all users will be updated in web app in real time using <a href="https://docs.soliditylang.org/en/v0.4.21/contracts.html#events">solidity events.
+All messages from all users will be updated in web app in real time using <a href="https://docs.soliditylang.org/en/v0.4.21/contracts.html#events">solidity events.</a>
 
   
 ## Technology stack
